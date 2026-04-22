@@ -157,7 +157,7 @@ def generate_html():
             // 更新币种列表
             const coinListHTML = priority.map(coin => {
                 const isActive = coin === currentCoin ? 'active' : '';
-                return `<div class="coin-item ${isActive}" onclick="selectCoin('${coin}')">${coin}</div>`;
+                return `<div class="coin-item ${isActive}" onclick="selectCoin('{coin}')">{coin}</div>`;
             }).join('');
             document.getElementById('coin-list').innerHTML = coinListHTML;
         }

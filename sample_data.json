@@ -1,15 +1,122 @@
-{
-  "date": "2026-04-22",
-  "coins": {
-    "BTC": {
-      "otc": 1200,
-      "explosion": 150,
-      "status": "进场期第 5 天"
-    },
-    "ETH": {
-      "otc": 1300,
-      "explosion": 180,
-      "status": "进场期第 6 天"
+[
+  {
+    "date": "2026-04-18",
+    "coins": {
+      "BTC": {
+        "otc": 1100,
+        "explosion": 120,
+        "status": "进场期第 1 天"
+      },
+      "ETH": {
+        "otc": 1200,
+        "explosion": 140,
+        "status": "进场期第 1 天"
+      }
+    }
+  },
+  {
+    "date": "2026-04-19",
+    "coins": {
+      "BTC": {
+        "otc": 1150,
+        "explosion": 135,
+        "status": "进场期第 2 天"
+      },
+      "ETH": {
+        "otc": 1250,
+        "explosion": 155,
+        "status": "进场期第 2 天"
+      }
+    }
+  },
+  {
+    "date": "2026-04-20",
+    "coins": {
+      "BTC": {
+        "otc": 1180,
+        "explosion": 145,
+        "status": "进场期第 3 天"
+      },
+      "ETH": {
+        "otc": 1280,
+        "explosion": 165,
+        "status": "进场期第 3 天"
+      }
+    }
+  },
+  {
+    "date": "2026-04-21",
+    "coins": {
+      "BTC": {
+        "otc": 1220,
+        "explosion": 160,
+        "status": "进场期第 4 天"
+      },
+      "ETH": {
+        "otc": 1320,
+        "explosion": 180,
+        "status": "进场期第 4 天"
+      }
+    }
+  },
+  {
+    "date": "2026-04-22",
+    "coins": {
+      "BTC": {
+        "otc": 1200,
+        "explosion": 150,
+        "status": "进场期第 5 天"
+      },
+      "ETH": {
+        "otc": 1300,
+        "explosion": 180,
+        "status": "进场期第 5 天"
+      }
+    }
+  },
+  {
+    "date": "2026-04-23",
+    "coins": {
+      "BTC": {
+        "otc": 1180,
+        "explosion": 140,
+        "status": "退场期第 1 天"
+      },
+      "ETH": {
+        "otc": 1280,
+        "explosion": 170,
+        "status": "退场期第 1 天"
+      }
+    }
+  },
+  {
+    "date": "2026-04-24",
+    "coins": {
+      "BTC": {
+        "otc": 1150,
+        "explosion": 130,
+        "status": "退场期第 2 天"
+      },
+      "ETH": {
+        "otc": 1250,
+        "explosion": 160,
+        "status": "退场期第 2 天"
+      }
+    }
+  },
+  {
+    "date": "2026-04-25",
+    "coins": {
+      "BTC": {
+        "otc": 1120,
+        "explosion": 120,
+        "status": "退场期第 3 天"
+      },
+      "ETH": {
+        "otc": 1220,
+        "explosion": 150,
+        "status": "退场期第 3 天"
+      }
     }
   }
-}
+]

@@ -6,34 +6,39 @@
 import json
 import os
 
-SAMPLE_FILE = '/root/.hermes/visualization/sample_data.json'
-OUTPUT_FILE = '/root/.hermes/visualization/dashboard.html'
+SAMPLE_FILE = 'sample_data.json'
+OUTPUT_FILE = 'dashboard.html'
 
 def generate_html():
-    # 读取样本数据
+    # 读取样本数据（现在是数组格式）
     with open(SAMPLE_FILE, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
-    date = data['date']
-    coins = data['coins']
-    
-    # 确定优先级币种
-    priority = ['BTC', 'ETH']
-    for coin in coins:
-        if coin not in priority:
-            if coins[coin].get('explosion', 0) > 0 or '进场期' in coins[coin].get('status', ''):
-                priority.append(coin)
+        data_list = json.load(f)
     
     # 构建图表数据
     chart_data = {}
-    for coin in priority:
-        if coin in coins:
-            chart_data[coin] = {
-                'date': date,
-                'otc': coins[coin]['otc'],
-                'explosion': coins[coin]['explosion'],
-                'status': coins[coin]['status']
-            }
+    priority = ['BTC', 'ETH']
+    
+    for data in data_list:
+        date = data['date']
+        coins = data['coins']
+        
+        for coin in priority:
+            if coin in coins:
+                if coin not in chart_data:
+                    chart_data[coin] = {
+                        'dates': [],
+                        'otc': [],
+                        'explosion': [],
+                        'statuses': []
+                    }
+                
+                status = coins[coin]['status']
+                status_text = '进场期' if '进场期' in status else '退场期'
+                
+                chart_data[coin]['dates'].append(f"{date} ({status_text})")
+                chart_data[coin]['otc'].append(coins[coin]['otc'])
+                chart_data[coin]['explosion'].append(coins[coin]['explosion'])
+                chart_data[coin]['statuses'].append(status)
     
     # 生成 HTML
     html = f'''<!DOCTYPE html>
@@ -83,25 +88,14 @@ def generate_html():
             const coinData = allData[currentCoin];
             if (!coinData) return;
             
-            const status = coinData.status;
-            const statusClass = status.includes('entry') ? 'status-entry' : 'status-exit';
-            const statusText = status.includes('entry') ? '进场期' : '退场期';
-            
-            // 创建带进退场天数的日期标签
-            const dateLabel = `${{coinData.date}} (${{statusText}})`;
-            
-            document.getElementById('coin-list').innerHTML = priority.map(coin => 
-                `<div class="coin-item ${{coin === currentCoin ? 'active' : ''}}" onclick="selectCoin('${{coin}}')">${{coin}}</div>`
-            ).join('');
-            
             new Chart(document.getElementById('combinedChart'), {{
                 type: 'line',
                 data: {{
-                    labels: [dateLabel],
+                    labels: coinData.dates,
                     datasets: [
                         {{
                             label: '场外指数',
-                            data: [coinData.otc],
+                            data: coinData.otc,
                             borderColor: '#4fc3f7',
                             backgroundColor: 'rgba(79, 195, 247, 0.1)',
                             yAxisID: 'y',
@@ -110,7 +104,7 @@ def generate_html():
                         }},
                         {{
                             label: '爆破指数',
-                            data: [coinData.explosion],
+                            data: coinData.explosion,
                             borderColor: '#ff9800',
                             backgroundColor: 'rgba(255, 152, 0, 0.1)',
                             yAxisID: 'y1',
@@ -162,6 +156,11 @@ def generate_html():
                     }}
                 }}
             }});
+            
+            // 更新币种列表
+            document.getElementById('coin-list').innerHTML = priority.map(coin => 
+                `<div class="coin-item ${{coin === currentCoin ? 'active' : ''}}" onclick="selectCoin('${{coin}}')">${{coin}}</div>`
+            ).join('');
         }}
         
         function selectCoin(coin) {{
@@ -178,7 +177,7 @@ def generate_html():
         f.write(html)
     
     print(f"✅ 仪表盘已生成：{OUTPUT_FILE}")
-    print(f"📅 数据日期：{date}")
+    print(f"📅 数据日期范围：{data_list[0]['date']} - {data_list[-1]['date']}")
     print(f"🪙 币种数量：{len(chart_data)}")
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto OTC Index Dashboard - 2026-04-22</title>
+    <title>Crypto OTC Index Dashboard - 2026-04-25</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,7 +36,7 @@
         </div>
     </div>
     <script>
-        const allData = {"BTC": {"date": "2026-04-22", "otc": 1200, "explosion": 150, "status": "进场期第 5 天"}, "ETH": {"date": "2026-04-22", "otc": 1300, "explosion": 180, "status": "进场期第 6 天"}};
+        const allData = {"BTC": {"dates": ["2026-04-18 (进场期)", "2026-04-19 (进场期)", "2026-04-20 (进场期)", "2026-04-21 (进场期)", "2026-04-22 (进场期)", "2026-04-23 (退场期)", "2026-04-24 (退场期)", "2026-04-25 (退场期)"], "otc": [1100, 1150, 1180, 1220, 1200, 1180, 1150, 1120], "explosion": [120, 135, 145, 160, 150, 140, 130, 120], "statuses": ["进场期第 1 天", "进场期第 2 天", "进场期第 3 天", "进场期第 4 天", "进场期第 5 天", "退场期第 1 天", "退场期第 2 天", "退场期第 3 天"]}, "ETH": {"dates": ["2026-04-18 (进场期)", "2026-04-19 (进场期)", "2026-04-20 (进场期)", "2026-04-21 (进场期)", "2026-04-22 (进场期)", "2026-04-23 (退场期)", "2026-04-24 (退场期)", "2026-04-25 (退场期)"], "otc": [1200, 1250, 1280, 1320, 1300, 1280, 1250, 1220], "explosion": [140, 155, 165, 180, 180, 170, 160, 150], "statuses": ["进场期第 1 天", "进场期第 2 天", "进场期第 3 天", "进场期第 4 天", "进场期第 5 天", "退场期第 1 天", "退场期第 2 天", "退场期第 3 天"]}};
         const priority = ["BTC", "ETH"];
         
         let currentCoin = priority[0];
@@ -45,22 +45,14 @@
             const coinData = allData[currentCoin];
             if (!coinData) return;
             
-            const status = coinData.status;
-            const statusClass = status.includes('entry') ? 'status-entry' : 'status-exit';
-            const statusText = status.includes('entry') ? '进场期' : '退场期';
-            
-            document.getElementById('coin-list').innerHTML = priority.map(coin => 
-                `<div class="coin-item ${coin === currentCoin ? 'active' : ''}" onclick="selectCoin('${coin}')">${coin}</div>`
-            ).join('');
-            
             new Chart(document.getElementById('combinedChart'), {
                 type: 'line',
                 data: {
-                    labels: [coinData.date],
+                    labels: coinData.dates,
                     datasets: [
                         {
                             label: '场外指数',
-                            data: [coinData.otc],
+                            data: coinData.otc,
                             borderColor: '#4fc3f7',
                             backgroundColor: 'rgba(79, 195, 247, 0.1)',
                             yAxisID: 'y',
@@ -69,7 +61,7 @@
                         },
                         {
                             label: '爆破指数',
-                            data: [coinData.explosion],
+                            data: coinData.explosion,
                             borderColor: '#ff9800',
                             backgroundColor: 'rgba(255, 152, 0, 0.1)',
                             yAxisID: 'y1',
@@ -121,6 +113,11 @@
                     }
                 }
             });
+            
+            // 更新币种列表
+            document.getElementById('coin-list').innerHTML = priority.map(coin => 
+                `<div class="coin-item ${coin === currentCoin ? 'active' : ''}" onclick="selectCoin('${coin}')">${coin}</div>`
+            ).join('');
         }
         
         function selectCoin(coin) {
@@ -132,4 +129,3 @@
     </script>
 </body>
 </html>
-<!-- Updated with dateLabel -->

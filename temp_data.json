@@ -1,0 +1,20 @@
+{
+  "date": "2026-04-22",
+  "coins": {
+    "BTC": {
+      "otc": 1200.0,
+      "explosion": 150.0,
+      "status": "进场期第 5 天"
+    },
+    "ETH": {
+      "otc": 1300.0,
+      "explosion": 180.0,
+      "status": "进场期第 6 天"
+    },
+    "SOL": {
+      "otc": 100.0,
+      "explosion": 20.0,
+      "status": "退场期第 3 天"
+    }
+  }
+}

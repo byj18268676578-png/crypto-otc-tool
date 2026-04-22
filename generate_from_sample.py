@@ -41,28 +41,25 @@ def generate_html():
                 chart_data[coin]['statuses'].append(status)
     
     # 生成 HTML
-    html = f'''<!DOCTYPE html>
+    html = '''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto OTC Index Dashboard - {date}</title>
+    <title>Crypto OTC Index Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f0f23; color: #fff; }}
-        .container {{ display: flex; height: 100vh; }}
-        .sidebar {{ width: 200px; background: #1a1a2e; padding: 20px; overflow-y: auto; }}
-        .sidebar h2 {{ font-size: 18px; margin-bottom: 20px; color: #4fc3f7; }}
-        .coin-item {{ padding: 10px; cursor: pointer; border-radius: 8px; margin-bottom: 8px; transition: background 0.3s; }}
-        .coin-item:hover {{ background: #2a2a4e; }}
-        .coin-item.active {{ background: #4fc3f7; color: #000; }}
-        .main {{ flex: 1; padding: 20px; overflow-y: auto; }}
-        .chart-container {{ background: #1a1a2e; border-radius: 12px; padding: 20px; margin-bottom: 20px; }}
-        .chart-container h3 {{ margin-bottom: 15px; color: #4fc3f7; }}
-        .status-label {{ display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; margin-left: 10px; }}
-        .status-entry {{ background: #4caf50; color: #fff; }}
-        .status-exit {{ background: #f44336; color: #fff; }}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f0f23; color: #fff; }
+        .container { display: flex; height: 100vh; }
+        .sidebar { width: 200px; background: #1a1a2e; padding: 20px; overflow-y: auto; }
+        .sidebar h2 { font-size: 18px; margin-bottom: 20px; color: #4fc3f7; }
+        .coin-item { padding: 10px; cursor: pointer; border-radius: 8px; margin-bottom: 8px; transition: background 0.3s; }
+        .coin-item:hover { background: #2a2a4e; }
+        .coin-item.active { background: #4fc3f7; color: #000; }
+        .main { flex: 1; padding: 20px; overflow-y: auto; }
+        .chart-container { background: #1a1a2e; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .chart-container h3 { margin-bottom: 15px; color: #4fc3f7; }
     </style>
 </head>
 <body>
@@ -79,21 +76,21 @@ def generate_html():
         </div>
     </div>
     <script>
-        const allData = {json.dumps(chart_data, ensure_ascii=False)};
-        const priority = {json.dumps(priority, ensure_ascii=False)};
+        const allData = ''' + json.dumps(chart_data, ensure_ascii=False) + ''';
+        const priority = ''' + json.dumps(priority, ensure_ascii=False) + ''';
         
         let currentCoin = priority[0];
         
-        function renderChart() {{
+        function renderChart() {
             const coinData = allData[currentCoin];
             if (!coinData) return;
             
-            new Chart(document.getElementById('combinedChart'), {{
+            new Chart(document.getElementById('combinedChart'), {
                 type: 'line',
-                data: {{
+                data: {
                     labels: coinData.dates,
                     datasets: [
-                        {{
+                        {
                             label: '场外指数',
                             data: coinData.otc,
                             borderColor: '#4fc3f7',
@@ -101,8 +98,8 @@ def generate_html():
                             yAxisID: 'y',
                             fill: true,
                             tension: 0.4
-                        }},
-                        {{
+                        },
+                        {
                             label: '爆破指数',
                             data: coinData.explosion,
                             borderColor: '#ff9800',
@@ -110,63 +107,65 @@ def generate_html():
                             yAxisID: 'y1',
                             fill: true,
                             tension: 0.4
-                        }}
+                        }
                     ]
-                }},
-                options: {{
+                },
+                options: {
                     responsive: true,
-                    interaction: {{
+                    interaction: {
                         mode: 'index',
                         intersect: false,
-                    }},
-                    plugins: {{
-                        legend: {{
-                            labels: {{ color: '#fff' }}
-                        }}
-                    }},
-                    scales: {{
-                        x: {{
-                            grid: {{ color: 'rgba(255, 255, 255, 0.1)' }},
-                            ticks: {{ color: '#fff' }}
-                        }},
-                        y: {{
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#fff' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#fff' }
+                        },
+                        y: {
                             type: 'linear',
                             display: true,
                             position: 'left',
-                            grid: {{ color: 'rgba(255, 255, 255, 0.1)' }},
-                            ticks: {{ color: '#4fc3f7' }},
-                            title: {{
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#4fc3f7' },
+                            title: {
                                 display: true,
                                 text: '场外指数',
                                 color: '#4fc3f7'
-                            }}
-                        }},
-                        y1: {{
+                            }
+                        },
+                        y1: {
                             type: 'linear',
                             display: true,
                             position: 'right',
-                            grid: {{ color: 'rgba(255, 255, 255, 0.1)' }},
-                            ticks: {{ color: '#ff9800' }},
-                            title: {{
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#ff9800' },
+                            title: {
                                 display: true,
                                 text: '爆破指数',
                                 color: '#ff9800'
-                            }}
-                        }}
-                    }}
-                }}
-            }});
+                            }
+                        }
+                    }
+                }
+            });
             
             // 更新币种列表
-            document.getElementById('coin-list').innerHTML = priority.map(coin => 
-                `<div class="coin-item ${{coin === currentCoin ? 'active' : ''}}" onclick="selectCoin('${{coin}}')">${{coin}}</div>`
-            ).join('');
-        }}
+            const coinListHTML = priority.map(coin => {
+                const isActive = coin === currentCoin ? 'active' : '';
+                return `<div class="coin-item ${isActive}" onclick="selectCoin('${coin}')">${coin}</div>`;
+            }).join('');
+            document.getElementById('coin-list').innerHTML = coinListHTML;
+        }
         
-        function selectCoin(coin) {{
+        function selectCoin(coin) {
             currentCoin = coin;
             renderChart();
-        }}
+        }
         
         renderChart();
     </script>

@@ -158,7 +158,7 @@ def generate_html():
             const coinListHTML = priority.map(coin => {
                 const isActive = coin === currentCoin ? 'active' : '';
                 // 使用字符串拼接来生成正确的 onclick 事件
-                return '<div class="coin-item ' + isActive + '" onclick="selectCoin(' + "'" + coin + "'" + ')">' + coin + '</div>';
+                return '<div class="coin-item ' + isActive + '" onclick="selectCoin(\\'' + coin + '\\')">' + coin + '</div>';
             }).join('');
             document.getElementById('coin-list').innerHTML = coinListHTML;
         }

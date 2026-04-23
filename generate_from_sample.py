@@ -157,11 +157,17 @@ def generate_html():
             // 更新币种列表
             const coinListHTML = priority.map(coin => {
                 const isActive = coin === currentCoin ? 'active' : '';
-                // 使用字符串拼接来生成正确的 onclick 事件
-                const quote = String.fromCharCode(39);
-                return '<div class="coin-item ' + isActive + '" onclick="selectCoin(' + quote + coin + quote + ')">' + coin + '</div>';
+                // 使用 JavaScript 动态生成 onclick 事件
+                return '<div class="coin-item ' + isActive + '" data-coin="' + coin + '">' + coin + '</div>';
             }).join('');
             document.getElementById('coin-list').innerHTML = coinListHTML;
+            
+            // 为所有币种按钮添加点击事件监听器
+            document.querySelectorAll('.coin-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selectCoin(this.getAttribute('data-coin'));
+                });
+            });
         }
         
         function selectCoin(coin) {
